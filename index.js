@@ -53,7 +53,7 @@ appExpress.get('/seletiva', (req, res) => {
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro
 
-appExpress.post('https://site-dpx-wzsh.onrender.com/candidatar/', async function (req, res) {
+appExpress.post('candidatar/', async function (req, res) {
   const name = req.body.nick;
   const id_players = req.body.id;
   const elo = req.body.elo;
