@@ -10,7 +10,7 @@ const { initializeApp, applicationDefault, cert } = require("firebase-admin/app"
 
 const { getFirestore, Timestamp, FieldValue, Filter } = require("firebase-admin/firestore");
 
-const serviceAccount = require(`./git/site-dpx-37676-8dbecc329d08.json`);
+const serviceAccount = require('./git/site-dpx-37676-8dbecc329d08.json');
 
 const appFirebase = initializeApp({
   credential: applicationDefault(),
