@@ -53,7 +53,7 @@ appExpress.get('/seletiva', (req, res) => {
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro
 
-appExpress.post('candidatar/', async function (req, res) {
+appExpress.post('/candidatar/candidatar/', async function (req, res) {
   const name = req.body.nick;
   const id_players = req.body.id;
   const elo = req.body.elo;
