@@ -48,7 +48,7 @@ appExpress.get('/cadidatar', (req, res) => {
 })
 
 appExpress.get('/seletiva', (req, res) => {
-  res.sendFile('https://site-dpx-wzsh.onrender.com/seletiva.html');
+  res.sendFile('https://site-dpx-wzsh.onrender.com/seletiva');
 })
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro
