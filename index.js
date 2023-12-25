@@ -40,15 +40,15 @@ appExpress.use(express.urlencoded({ extended: true }))
 //Configuração das rotas e das páginas do site
 
 appExpress.get('/', (req, res) => {
-  res.redirect('https://site-dpx.onrender.com');
+  res.sendFile(__dirname + "/public/index.html");
 })
 
 appExpress.get('/cadidatar', (req, res) => {       
-  res.redirect('https://site-dpx.onrender.com/candidatar');
+  res.sendFile(__dirname + "/public/candidatar/index.html");
 })
 
 appExpress.get('/seletiva', (req, res) => {
-  res.redirect('https://site-dpx-wzsh.onrender.com/seletiva');
+  res.sendFile(__dirname + "/public/candidatar/seletiva.html");
 })
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro

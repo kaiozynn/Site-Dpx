@@ -1,0 +1,99 @@
+:root {
+  --cor-principal-logo: #DAA811;
+}
+
+body {
+  display: block;
+  background-color: var(--cor-principal-logo);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 50px auto;
+}
+
+.container-img-tablet {
+  display: none;
+}
+
+.container-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.container-form {
+  width: 300px;
+  height: auto;
+  padding: 10px;
+  margin: auto;
+  margin-top: -70px;
+  background-color: var(--cor-principal-logo);
+}
+
+.container-form div,label {
+  padding: 5px 0;
+  font-weight: 500;
+}
+
+.container-form div input {
+  width: 95%;
+  height: 20px;
+  padding: 5px;
+  font-size: 20px;
+  outline: none;
+}
+
+.container-form div select {
+  width: 100%;
+  height: 35px;
+  padding: 5px;
+  font-size: 20;
+  outline: none;
+}
+
+.butons {
+  display: grid;
+  margin: auto;
+  width: 200px;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr;
+}
+
+.butons button, a {
+  text-align: center;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  height: 20px;
+  font-size: 15px;
+  padding: 5px;
+}
+
+.butons button {
+  height: 30px;
+}
+
+.butons > .link_seletiva {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#voltar {
+  margin-top: 10px;
+  width: 100px;
+  border: none;
+  cursor: pointer;
+}
+
+.butons button:hover, a:hover {
+  background-color: rgb(32, 32, 32);
+}

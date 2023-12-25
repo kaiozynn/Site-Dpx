@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faça seu cadastro</title>
+  <link rel="stylesheet" href="../estilos-candidatos/estiloCandidato.css" media="screen and (max-width:600px)">
+  <link rel="stylesheet" href="../estilos-candidatos/estyleTabletCand.css" media="screen and (min-width: 680px)">
+  <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container-img">
+    <img src="../imagens/dpx-logo.jpg" alt="dpx-logo">
+  </div>
+  <div class="container-form">
+    <div class="card">
+      <span class="line"></span>
+      <span id="lineRight" class="line"></span>
+      <span id="lineBottom" class="line"></span>
+      <span id="lineLeft" class="line"></span>
+      <div id="meuFormulario">
+        <div class="container-img-tablet">
+          <img src="../imagens/dpx-logo.jpg" alt="dpx-logo">
+        </div>
+        <div>
+          <label for="nick">
+            <span>Nickname</span>
+          </label>
+          <br><input type="text" name="nick" id="nick" placeholder="">
+        </div>
+        <div>
+          <label for="id">
+            <span>ID</span>
+          </label>
+          <br><input type="number" name="id" id="id" min="0" placeholder="">
+        </div>
+        <div>
+          <label for="elo">
+            <span>Elo</span>
+          </label>
+          <br><select name="elo" id="elo">
+            <option selected hidden disabled></option>
+            <option value="Épico">Épico</option>
+            <option value="Lenda">Lenda</option>
+            <option value="Mítico">Mítico</option>
+            <option value="Honra Mítica">Honra Mítica</option>
+            <option value="Glória  Mítica">Glória Mítica</option>
+            <option value="Mítico Imortal">Mítico Imortal</option>
+          </select>
+        </div>
+        <div>
+          <label for="email">
+            <span>E-mail</span>
+          </label>
+          <br><input type="email" name="email" id="contato" placeholder="">
+        </div>
+        <div>
+          <label for="lanePrincipal">
+            <span>Lane principal</span>
+          </label>
+          <br><select name="lanePrincipal" id="lanePrincipal">
+            <option selected hidden disabled></option>
+            <option value="Gold">Ouro</option>
+            <option value="Jungle">Selva</option>
+            <option value="Mid">Mid</option>
+            <option value="Rotação">Rotação</option>
+            <option value="Exp">Exp</option>
+          </select>
+        </div>
+        <div>
+          <label for="laneSecundaria">
+            <span>Lane secundaria</span>
+          </label>
+          <br><select name="laneSecundaria" id="laneSecundaria">
+            <option selected hidden disabled></option>
+            <option value="Gold">Ouro</option>
+            <option value="Jungle">Selva</option>
+            <option value="Mid">Mid</option>
+            <option value="Rotação">Rotação</option>
+            <option value="Exp">Exp</option>
+          </select>
+        </div>
+        <div class="butons">
+          <button type="submit" id="env">Enviar</button>
+          <a href="https://site-dpx-wzsh.onrender.com/">Voltar</a>
+          <a href="../candidatar/seletiva.html" class="link_seletiva">Acompanhar Seletiva</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  const form = document.querySelector('.card');
+  const button = document.querySelector('.id');
+  const button2 = document.querySelector('.flip_login')
+  const spans = document.querySelectorAll('.line')
+  const time = 1950;
+  const cad_form = document.querySelector('#meuFormulario');
+  const enviar = document.querySelector('#env');
+
+  //Função envio dos dados e tratamento do retorno
+
+  enviar.addEventListener('click', () => {
+
+    //Variaveis dados do formulário
+
+    const nick = document.querySelector('#nick').value;
+    const id = document.querySelector('#id').value;
+    const elo = document.querySelector('#elo').value;
+    const email_de_contato = document.querySelector('#contato').value;
+    const lanePrincipal = document.querySelector('#lanePrincipal').value;
+    const laneSecundaria = document.querySelector('#laneSecundaria').value;
+    
+    const dados_form = {
+      nick,
+      id,
+      elo,
+      email_de_contato,
+      lanePrincipal,
+      laneSecundaria
+    }
+
+    fetch('https://site-dpx-wzsh.onrender.com/candidatar', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(dados_form)
+    }).then(response => {
+      response.json().then(returned_status => {
+        if (returned_status.success) {
+          alert('Usuário cadastrado com sucesso')
+        } else if (returned_status.failed) {
+          alert('Usuário já cadastrado em nosso banco de dados')
+        }
+      })
+    })
+
+  })
+
+  //Animação linhas laterais
+  
+  function animatioLineTop() {
+    spans[0].style.display = 'block'
+  }
+
+  function animatioLineRigth() {
+    lineRight.style.display = 'block';
+  };
+
+  function animatioLineBottom() {
+    lineBottom.style.display = 'block';
+  };
+
+  function animatioLineLeft() {
+    lineLeft.style.display = 'block';
+  };
+
+  setInterval(animatioLineRigth, time);
+  setInterval(animatioLineBottom, time*2)
+  setInterval(animatioLineLeft, time*3)
+</script>
+<script type="module" src="../index.js"></script>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sua seletiva</title>
+  <link rel="stylesheet" href="../estilos-seletiva/estiloPopup.css">
+  <link rel="stylesheet" href="../estilos-seletiva/styleSeletiva.css" media="screen and (max-width:600px)">
+  <link rel="stylesheet" href="../estilos-seletiva/styleTabletSele.css" media="screen and (min-width: 680px)">
+  <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container-img">
+    <img src="../imagens/dpx-logo.jpg" alt="dpx-logo">
+  </div>
+  <div class="container-form">
+    <div class="card">
+      <span class="line"></span>
+      <span id="lineRight" class="line"></span>
+      <span id="lineBottom" class="line"></span>
+      <span id="lineLeft" class="line"></span>
+      <div id="formSeletiva">
+        <div>
+          <label for="id_search">Seu id</label><br>
+          <input type="number" name="id_search" id="id_search" min="0" required>
+        </div>
+
+        <div class="butons">
+          <button id="env">Buscar</button>
+          <a href="https://site-dpx.onrender.com/candidatar">Cadastrar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <section>
+        <p class="name_player">Seu nick é:</p>
+        <p class="id_player">Seu id:</p>
+        <p class="elo">Seu elo:</p>
+        <p class="laneP">Sua lane de destaque:</p>
+        <p class="laneS">Sua lane secundária</p>
+        <p class="status">Você está com o status de:</p>
+      </section>
+    </div>
+  </div>
+</body>
+<script>
+  //-------------------------------------------------------
+  // variaveis do formulário
+
+  const form = document.querySelector('.card');
+  const spans = document.querySelectorAll('.line')
+  const time = 1950;
+  const sendData = document.querySelector('#env');
+  const nick_search = document.getElementById('nick_search');
+  const id_search = document.getElementById('id_search');
+
+  //-------------------------------------------------------
+  //variaveis do pop-up
+
+  const close_popup = document.querySelector('.close');
+  const popup = document.querySelector('.popup');
+  const p_name_player = document.querySelector('.name_player');
+  const p_id_player = document.querySelector('.id_player');
+  const p_elo_player = document.querySelector('.elo');
+  const p_laneP_player = document.querySelector('.laneP');
+  const p_laneS_player = document.querySelector('.laneS');
+  const p_status_player = document.querySelector('.status');
+
+  //-------------------------------------------------------
+  //Funções de animção das linhas laterais
+
+  function animatioLineTop() {
+    spans[0].style.display = 'block'
+  }
+
+  function animatioLineRigth() {
+    lineRight.style.display = 'block';
+  };
+
+  function animatioLineBottom() {
+    lineBottom.style.display = 'block';
+  };
+
+  function animatioLineLeft() {
+    lineLeft.style.display = 'block';
+  };
+
+  setInterval(animatioLineRigth, time);
+  setInterval(animatioLineBottom, time*2)
+  setInterval(animatioLineLeft, time*3)
+
+  //-------------------------------------------------------
+  //Envio dos dados para o back end
+
+  sendData.addEventListener('click', () => {
+
+    const dados = {
+      id_search: id_search.value
+    }
+
+    if (id_search.value == '') {
+      alert('Preencha o id')
+      id_search.focus()
+    } else {
+      fetch('https://site-dpx-wzsh.onrender.com/seletiva', {
+        method: 'POST',
+        headers: {
+          'Content-type' : 'application/json'
+        },
+        body: JSON.stringify(dados)
+      })
+      .then(response => {
+        response.json().then(dados_firebase => {
+          if (dados_firebase.not_exist) {
+            alert('Usuario não cadastrados')
+            id_search.value = ''
+            id_search.focus()
+          } else {
+            document.getElementById('popup').style.display='block'
+            if (testStatusPlayerExist(dados_firebase)) {
+              escreverDadosSemStatus(dados_firebase);
+            } else {
+              escreverDadosComStatus(dados_firebase);
+            }
+            id_search.value = ''
+          }
+        })
+      })
+    }
+  })
+
+  //-------------------------------------------------------
+  //Fechar pop-up
+
+  close_popup.addEventListener('click', () => {
+    popup.style.display='none'
+    apagarDadosPopup()
+  })
+
+  //Funções de valores verdades
+
+  function testStatusPlayerExist(dados_firebase) {
+    return dados_firebase.status == undefined
+  }
+
+  //--------------------------------------------------------
+  //Funções de escrita de dados
+
+  function escreverDadosSemStatus(dados_firebase){
+    p_name_player.innerHTML += ` ${dados_firebase.nome}`
+    p_id_player.innerHTML += ` ${dados_firebase.id}`
+    p_elo_player.innerHTML += ` ${dados_firebase.elo}`
+    p_laneP_player.innerHTML += ` ${dados_firebase.lanePrincipal}`
+    p_laneS_player.innerHTML += ` ${dados_firebase.laneSecundaria}`
+    p_status_player.innerHTML += ` Sem verificação`
+  };
+
+  function escreverDadosComStatus(dados_firebase) {
+    p_name_player.innerHTML += ` ${dados_firebase.nome}`
+    p_id_player.innerHTML += ` ${dados_firebase.id}`
+    p_elo_player.innerHTML += ` ${dados_firebase.elo}`
+    p_laneP_player.innerHTML += ` ${dados_firebase.lanePrincipal}`
+    p_laneS_player.innerHTML += ` ${dados_firebase.laneSecundaria}`
+    p_status_player.innerHTML += ` ${dados_firebase.status}`
+  };
+
+  //--------------------------------------------------------
+  //Função de apagar dados do formulário
+
+  function apagarDadosPopup() {
+    p_name_player.innerHTML = ''
+    p_id_player.innerHTML = ''
+    p_elo_player.innerHTML = ''
+    p_laneP_player.innerHTML = ''
+    p_laneS_player.innerHTML = ''
+    p_status_player.innerHTML = ''
+  }
+  </script>
+<script type="module" src="../index.js"></script>
+</html>
