@@ -40,15 +40,15 @@ appExpress.use(express.urlencoded({ extended: true }))
 //Configuração das rotas e das páginas do site
 
 appExpress.get('/', (req, res) => {
-  res.redirect('https://kaiozynn.github.io/loja-pokemon');
+  res.redirect('https://site-dpx.onrender.com');
 })
 
 appExpress.get('/cadidatar', (req, res) => {       
-  res.sendFile(__dirname + '/public/candidatar/index.html');
+  res.sendFile('https://site-dpx.onrender.com/candidatar');
 })
 
 appExpress.get('/seletiva', (req, res) => {
-  res.sendFile(__dirname + '/public/candidatar/seletiva.html');
+  res.sendFile('https://site-dpx-wzsh.onrender.com/seletiva.html');
 })
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro
