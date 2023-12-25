@@ -6,7 +6,7 @@ require('dotenv').config();
 appExpress.use(express.json());
 
 //Configuração do firebase
-const  { app }  = require("firebase-admin");
+const { app } = require("firebase-admin");
 const { initializeApp, applicationDefault, cert } = require("firebase-admin/app")
 
 const { getFirestore, Timestamp, FieldValue, Filter } = require("firebase-admin/firestore");
@@ -35,7 +35,7 @@ const dataBase = getFirestore(appFirebase);
 //Uso das pastas de estilo e da coleta de dados
 
 appExpress.use(express.static("public"));
-appExpress.use(express.urlencoded({extended: true}))
+appExpress.use(express.urlencoded({ extended: true }))
 
 //Configuração das rotas e das páginas do site
 
@@ -53,7 +53,7 @@ appExpress.get('/seletiva', (req, res) => {
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro
 
-appExpress.post('/cad', async function(req, res) {
+appExpress.post('/cad', async function (req, res) {
   const name = req.body.nick;
   const id_players = req.body.id;
   const elo = req.body.elo;
@@ -64,7 +64,7 @@ appExpress.post('/cad', async function(req, res) {
   const doc = await documentReference.get();
 
   if (doc.exists) {
-    res.json({failed: 404})
+    res.json({ failed: 404 })
   } else {
     documentReference.set({
       nome: name,
@@ -74,24 +74,24 @@ appExpress.post('/cad', async function(req, res) {
       lanePrincipal: mainLine,
       laneSecundaria: secondaryLine
     }).then(() => {
-      res.json({success: 200})
+      res.json({ success: 200 })
     }).catch((error) => {
       console.log("Ouve o error" + error)
-  })
-}
+    })
+  }
 })
 
 // Dados que vou receber do 2 sistema de informação para relatar ao usuário sua condição no processo seletivo
 
-appExpress.post('/seletiva', async function(req, res) {
+appExpress.post('/seletiva', async function (req, res) {
   const nickname_search = req.body.nick_search;
   const id_search = req.body.id_search;
 
   const playersRef = dataBase.collection('players').doc(id_search);
   const doc = await playersRef.get();
-  
+
   if (!doc.exists) {
-    res.json({not_exist: 404})
+    res.json({ not_exist: 404 })
   } else {
     res.json(doc.data());
   }
