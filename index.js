@@ -97,4 +97,4 @@ appExpress.post('/seletiva', async function(req, res) {
   }
 })
 
-appExpress.listen(port, () => console.log('Servidor ON!'));
+appExpress.listen(process.env.PORT, () => console.log('Servidor ON!'));
