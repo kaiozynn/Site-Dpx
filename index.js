@@ -44,11 +44,11 @@ appExpress.get('/', (req, res) => {
 })
 
 appExpress.get('/cadidatar', (req, res) => {       
-  res.sendFile('https://site-dpx.onrender.com/candidatar');
+  res.redirect('https://site-dpx.onrender.com/candidatar');
 })
 
 appExpress.get('/seletiva', (req, res) => {
-  res.sendFile('https://site-dpx-wzsh.onrender.com/seletiva');
+  res.redirect('https://site-dpx-wzsh.onrender.com/seletiva');
 })
 
 //Dados vindos do formulário são tratados e enviado pra o firebase aqui do cadastro
