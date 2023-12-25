@@ -40,11 +40,11 @@ appExpress.use(express.urlencoded({ extended: true }))
 //Configuração das rotas e das páginas do site
 
 appExpress.get('/', (req, res) => {
-  res.redirect('');
+  res.redirect('https://kaiozynn.github.io/loja-pokemon');
 })
 
-appExpress.get('/cadidatar', (req, res) => {
-  res.sendFile(__dirname + '/public/candidatar/index.html');;
+appExpress.get('/cadidatar', (req, res) => {       
+  res.sendFile(__dirname + '/public/candidatar/index.html');
 })
 
 appExpress.get('/seletiva', (req, res) => {
